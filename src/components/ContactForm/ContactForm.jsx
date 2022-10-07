@@ -2,7 +2,6 @@ import styles from './ContactForm.module.css';
 import { Button } from 'components/Button/Button';
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { addContact } from 'redux/actions/contactsActions';
 import { nanoid } from '@reduxjs/toolkit';
 
 
@@ -39,7 +38,7 @@ const ContactForm = () => {
       return;
     }
 
-    dispatch(addContact(newContact));
+    // dispatch(addContact(newContact));
     form.reset();
   };
 

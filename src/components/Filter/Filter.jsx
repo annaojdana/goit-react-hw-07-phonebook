@@ -1,7 +1,7 @@
 import styles from './Filter.module.css';
 import React from 'react';
 import { useDispatch } from 'react-redux';
-import { setFilter } from 'redux/actions/filterActions';
+
 
 const Filter = () => {
   const { field, text, input } = styles;
@@ -10,7 +10,7 @@ const Filter = () => {
 
   const filterValue = e => {
     const value = e.target.value.toLowerCase();
-    dispatch(setFilter(value));
+    // dispatch(setFilter(value));
   };
 
   return (

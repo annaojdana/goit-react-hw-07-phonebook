@@ -2,7 +2,7 @@ import styles from './ContactList.module.css';
 import { Notification } from 'components/Notification/Notification';
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { deleteContact } from 'redux/actions/contactsActions';
+
 
 const ContactList = () => {
   const { wrapper, text, button } = styles;
@@ -16,9 +16,9 @@ const ContactList = () => {
 
   const dispatch = useDispatch();
 
-  const deleteItemContact = id => {
-    return dispatch(deleteContact(id));
-  };
+  // const deleteItemContact = id => {
+  //   return dispatch(deleteContact(id));
+  // };
 
   return (
     <>
@@ -31,7 +31,7 @@ const ContactList = () => {
                 <button
                   type="button"
                   className={button}
-                  onClick={() => deleteItemContact(contact.id)}
+                  // onClick={() => deleteItemContact(contact.id)}
                 >
                   Delete
                 </button>
