@@ -21,16 +21,15 @@ const ContactList = () => {
   const contactsStatus = useSelector(getContactsStatus);
   const error = useSelector(getContactsError);
   const filter = useSelector(state => state.filter);
-  const filteredContacts = contacts.filter(c =>
-    c.name.toLowerCase().includes(filter)
-  );
+  const filteredContacts = contacts
+    .filter(c => c.name.toLowerCase().includes(filter))
+    .sort((a, b) => b.id - a.id);
 
   useEffect(() => {
     if (contactsStatus === 'idle') {
       dispatch(fetchContacts());
     }
   }, [contactsStatus, dispatch]);
-
 
   let content;
   if (contactsStatus === 'loading') {
