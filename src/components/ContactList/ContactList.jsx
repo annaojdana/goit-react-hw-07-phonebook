@@ -31,13 +31,11 @@ const ContactList = () => {
     }
   }, [contactsStatus, dispatch]);
 
-  console.log(contacts);
 
   let content;
   if (contactsStatus === 'loading') {
     content = <p>"Loading..."</p>;
   } else if (contactsStatus === 'succeeded') {
-    console.log(contacts[1]);
     content = (
       <ul className={wrapper}>
         {filteredContacts.map(contact => {
@@ -63,7 +61,6 @@ const ContactList = () => {
     content = <p>{error}</p>;
   }
 
-  console.log(contacts);
   // const deleteItemContact = id => {
   //   return dispatch(deleteContact(id));
   // };

@@ -13,7 +13,6 @@ export const fetchContacts = createAsyncThunk(
   'contacts/fetchContacts',
   async () => {
     const response = await axios.get(BASIC_URL);
-    console.log(response.data);
     return response.data;
   }
 );

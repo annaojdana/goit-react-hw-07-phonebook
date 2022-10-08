@@ -10,9 +10,6 @@ const ContactForm = () => {
   const contacts = useSelector(state => state.contacts.contacts);
   const dispatch = useDispatch();
 
-  console.log('kontakty');
-  console.log(contacts);
-
   const onSubmit = evt => {
     evt.preventDefault();
 

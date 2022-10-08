@@ -14,7 +14,7 @@ const App = () => {
   const dispatch = useDispatch();
   const contactsStatus = useSelector(getContactsStatus);
   const contactsList = useSelector(state => state.contacts.contacts);
-  console.log(contactsList);
+  
 
   useEffect(() => {
     if (contactsStatus === 'idle') {
