@@ -7,7 +7,7 @@ import store from 'redux/store'
 
 
 
-
+console.log(store.getState());
 
 
 ReactDOM.createRoot(document.getElementById('root')).render(
