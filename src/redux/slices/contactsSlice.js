@@ -1,7 +1,8 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 
-const BASIC_URL = 'https://63396c6866857f698fb5d11c.mockapi.io/api/v1/contacts';
+const CONTACTS_URL =
+  'https://63396c6866857f698fb5d11c.mockapi.io/api/v1/contacts';
 
 const initialState = {
   contacts: [],
@@ -12,7 +13,7 @@ const initialState = {
 export const fetchContacts = createAsyncThunk(
   'contacts/fetchContacts',
   async () => {
-    const response = await axios.get(BASIC_URL);
+    const response = await axios.get(CONTACTS_URL);
     return response.data;
   }
 );
@@ -20,7 +21,14 @@ export const fetchContacts = createAsyncThunk(
 export const addNewContact = createAsyncThunk(
   'contacts/addNewContact',
   async initialContact => {
-    const response = await axios.post(BASIC_URL, initialContact);
+    const response = await axios.post(CONTACTS_URL, initialContact);
+    return response;
+  }
+);
+export const deleteContactById = createAsyncThunk(
+  'contacts/deleteContact',
+  async id => {
+    const response = await axios.delete(CONTACTS_URL, id);
     return response;
   }
 );
@@ -43,6 +51,11 @@ const contactsSlice = createSlice({
         };
       },
     },
+    contactDelete: {
+      reducer(state, action) {
+        state.contacts = state.contacts.filter(c => c.id !== action.payload);
+      },
+    },
   },
   extraReducers(builder) {
     builder
@@ -62,6 +75,10 @@ const contactsSlice = createSlice({
         state.status = 'idle';
         console.log(action.payload.data);
         // state.contacts = [...action.payload.data];
+      })
+      .addCase(deleteContactById.fulfilled, (state, action) => {
+        state.status = 'idle';
+        console.log(action.payload);
       });
   },
 });
