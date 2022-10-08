@@ -10,6 +10,7 @@ import {
   getContactsStatus,
   fetchContacts,
 } from 'redux/slices/contactsSlice';
+import { nanoid } from 'nanoid';
 
 const ContactList = () => {
   const { wrapper, text, button } = styles;
@@ -29,7 +30,7 @@ const ContactList = () => {
       dispatch(fetchContacts());
     }
   }, [contactsStatus, dispatch]);
-  
+
   console.log(contacts);
 
   let content;
@@ -41,8 +42,11 @@ const ContactList = () => {
       <ul className={wrapper}>
         {filteredContacts.map(contact => {
           return (
-            <li className={text} key={contact.id}>
-              <span>{`${contact.name}: ${contact.number}`}</span>
+            <li className={text} key={nanoid()}>
+              <span>
+                {`${contact.name}:
+               ${contact.phone}`}
+              </span>
               <button
                 type="button"
                 className={button}
@@ -59,8 +63,6 @@ const ContactList = () => {
     content = <p>{error}</p>;
   }
 
-
-
   console.log(contacts);
   // const deleteItemContact = id => {
   //   return dispatch(deleteContact(id));
@@ -69,7 +71,7 @@ const ContactList = () => {
   return (
     <>
       {filteredContacts.length > 0 ? (
-        {content}
+        content
       ) : (
         <Notification message="You don't have this contact" />
       )}
