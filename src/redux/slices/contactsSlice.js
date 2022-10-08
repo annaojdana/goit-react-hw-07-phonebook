@@ -28,7 +28,7 @@ export const addNewContact = createAsyncThunk(
 export const deleteContactById = createAsyncThunk(
   'contacts/deleteContact',
   async id => {
-    const response = await axios.delete(CONTACTS_URL, id);
+    const response = await axios.delete(`${CONTACTS_URL}/${id}`, id);
     return response;
   }
 );
@@ -79,7 +79,21 @@ const contactsSlice = createSlice({
       .addCase(deleteContactById.fulfilled, (state, action) => {
         state.status = 'idle';
         console.log(action.payload);
-      });
+      })
+      .addCase(addNewContact.pending, (state, action) => {
+        state.status = 'loading';
+      })
+      .addCase(addNewContact.rejected, (state, action) => {
+        state.status = 'failed';
+        state.error = action.error.message;
+      })
+      .addCase(deleteContactById.pending, (state, action) => {
+        state.status = 'loading';
+      })
+      .addCase(deleteContactById.rejected, (state, action) => {
+        state.status = 'failed';
+        state.error = action.error.message;
+      });;
   },
 });
 
