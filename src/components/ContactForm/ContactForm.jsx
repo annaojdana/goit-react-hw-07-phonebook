@@ -1,31 +1,32 @@
 import styles from './ContactForm.module.css';
 import { Button } from 'components/Button/Button';
 import React from 'react';
-import { useSelector } from 'react-redux';
-// import { nanoid } from '@reduxjs/toolkit';
-// import { fetchContacts } from 'redux/slices/contactsSlice';
-
+import { useSelector, useDispatch } from 'react-redux';
+import { addNewContact } from 'redux/slices/contactsSlice';
 
 const ContactForm = () => {
   const { form, form__field, label, input } = styles;
 
-  const contacts = useSelector(state => state.contacts);
-  // const dispatch = useDispatch();
+  const contacts = useSelector(state => state.contacts.contacts);
+  const dispatch = useDispatch();
 
+  console.log('kontakty');
+  console.log(contacts);
 
-
-  const addNewContact = evt => {
+  const onSubmit = evt => {
     evt.preventDefault();
 
     const form = evt.target;
     const name = form.name.value;
     const number = form.number.value;
 
-    // const newContact = {
-    //   id: nanoid(),
-    //   name,
-    //   number,
-    // };
+    const newContact = {
+      name,
+      phone: number,
+    };
+
+    console.log('nowy kontakt');
+    console.log(newContact);
 
     if (contacts.some(contact => contact.name === name)) {
       alert(`${name} is already in contacts`);
@@ -40,12 +41,12 @@ const ContactForm = () => {
       return;
     }
 
-    // dispatch(addContact(newContact));
+    dispatch(addNewContact(newContact));
     form.reset();
   };
 
   return (
-    <form className={form} onSubmit={addNewContact}>
+    <form className={form} onSubmit={onSubmit}>
       <div className={form__field}>
         <label htmlFor="contactName" className={label}>
           Name

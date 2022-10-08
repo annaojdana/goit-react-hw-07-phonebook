@@ -1,4 +1,4 @@
-import { createSlice, nanoid, createAsyncThunk } from '@reduxjs/toolkit';
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 
 const BASIC_URL = 'https://63396c6866857f698fb5d11c.mockapi.io/api/v1/contacts';
@@ -37,7 +37,6 @@ const contactsSlice = createSlice({
       prepare(name, phone) {
         return {
           payload: {
-            id: nanoid(),
             name,
             phone,
             createdAt: new Date().toISOString(),
@@ -61,15 +60,9 @@ const contactsSlice = createSlice({
         state.error = action.error.message;
       })
       .addCase(addNewContact.fulfilled, (state, action) => {
-        // Fix for API contact IDs:
-        // Creating sortedcontacts & assigning the id
-        // would be not be needed if the fake API
-        // returned accurate new contact IDs
-        action.payload.id = nanoid();
-        // End fix for fake API contact IDs
-        action.payload.createdAt = new Date().toISOString();
-        console.log(action.payload);
-        state.contacts.push(action.payload);
+        state.status = 'idle';
+        console.log(action.payload.data);
+        // state.contacts = [...action.payload.data];
       });
   },
 });
