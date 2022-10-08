@@ -9,6 +9,7 @@ import {
   getContactsError,
   getContactsStatus,
   fetchContacts,
+  deleteContactById,
 } from 'redux/slices/contactsSlice';
 import { nanoid } from 'nanoid';
 
@@ -47,7 +48,7 @@ const ContactList = () => {
               <button
                 type="button"
                 className={button}
-                // onClick={() => deleteItemContact(contact.id)}
+                onClick={() => deleteItemContact(contact.id)}
               >
                 Delete
               </button>
@@ -60,9 +61,9 @@ const ContactList = () => {
     content = <p>{error}</p>;
   }
 
-  // const deleteItemContact = id => {
-  //   return dispatch(deleteContact(id));
-  // };
+  const deleteItemContact = id => {
+    return dispatch(deleteContactById(id));
+  };
 
   return (
     <>
