@@ -12,6 +12,7 @@ import {
   deleteContactById,
 } from 'redux/slices/contactsSlice';
 import { nanoid } from 'nanoid';
+import Loader from 'components/Loader/Loader';
 
 const ContactList = () => {
   const { wrapper, text, button } = styles;
@@ -34,7 +35,7 @@ const ContactList = () => {
 
   let content;
   if (contactsStatus === 'loading') {
-    content = <p>"Loading..."</p>;
+    content = <Loader/>;
   } else if (contactsStatus === 'succeeded') {
     content = (
       <ul className={wrapper}>
