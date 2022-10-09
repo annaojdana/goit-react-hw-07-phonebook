@@ -64,7 +64,6 @@ const contactsSlice = createSlice({
       })
       .addCase(fetchContacts.fulfilled, (state, action) => {
         state.status = 'succeeded';
-        // Add any fetched contacts to the array
         state.contacts = [...action.payload];
       })
       .addCase(fetchContacts.rejected, (state, action) => {
@@ -73,12 +72,10 @@ const contactsSlice = createSlice({
       })
       .addCase(addNewContact.fulfilled, (state, action) => {
         state.status = 'idle';
-        console.log(action.payload.data);
-        // state.contacts = [...action.payload.data];
       })
       .addCase(deleteContactById.fulfilled, (state, action) => {
         state.status = 'idle';
-        console.log(action.payload);
+
       })
       .addCase(addNewContact.pending, (state, action) => {
         state.status = 'loading';

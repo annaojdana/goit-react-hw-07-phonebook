@@ -35,7 +35,7 @@ const ContactList = () => {
 
   let content;
   if (contactsStatus === 'loading') {
-    content = <Loader/>;
+    content = <Loader />;
   } else if (contactsStatus === 'succeeded') {
     content = (
       <ul className={wrapper}>
@@ -65,7 +65,7 @@ const ContactList = () => {
   const deleteItemContact = id => {
     return dispatch(deleteContactById(id));
   };
-
+  
   return (
     <>
       {filteredContacts.length > 0 ? (

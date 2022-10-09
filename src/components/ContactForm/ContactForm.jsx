@@ -22,9 +22,6 @@ const ContactForm = () => {
       phone: number,
     };
 
-    console.log('nowy kontakt');
-    console.log(newContact);
-
     if (contacts.some(contact => contact.name === name)) {
       alert(`${name} is already in contacts`);
       return;
