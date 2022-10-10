@@ -1,42 +1,34 @@
 import styles from './ContactList.module.css';
 import { Notification } from 'components/Notification/Notification';
 import React from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { useEffect } from 'react';
-
-import {
-  selectAllContacts,
-  getContactsError,
-  getContactsStatus,
-  fetchContacts,
-  deleteContactById,
-} from 'redux/slices/contactsSlice';
+import { useSelector} from 'react-redux';
 import { nanoid } from 'nanoid';
 import Loader from 'components/Loader/Loader';
+import { useGetContactsQuery, useDeleteContactMutation } from 'services/contactsApi';
 
 const ContactList = () => {
   const { wrapper, text, button } = styles;
 
-  const dispatch = useDispatch();
+const {
+  data: contacts = [],
+  isLoading,
+  isSuccess,
+  isError,
+  error,
+} = useGetContactsQuery();
 
-  const contacts = useSelector(selectAllContacts);
-  const contactsStatus = useSelector(getContactsStatus);
-  const error = useSelector(getContactsError);
   const filter = useSelector(state => state.filter);
+
+
   const filteredContacts = contacts
-    .filter(c => c.name.toLowerCase().includes(filter))
-    .sort((a, b) => b.id - a.id);
+    .filter(c => c.name.toLowerCase().includes(filter));
 
-  useEffect(() => {
-    if (contactsStatus === 'idle') {
-      dispatch(fetchContacts());
-    }
-  }, [contactsStatus, dispatch]);
 
-  let content;
-  if (contactsStatus === 'loading') {
+  let content = <Notification message="Your phonebook is empty" />;
+
+  if (isLoading) {
     content = <Loader />;
-  } else if (contactsStatus === 'succeeded') {
+  } else if (isSuccess) {
     content = (
       <ul className={wrapper}>
         {filteredContacts.map(contact => {
@@ -58,21 +50,15 @@ const ContactList = () => {
         })}
       </ul>
     );
-  } else if (contactsStatus === 'failed') {
-    content = <p>{error}</p>;
+  } else if (isError) {
+    content = <Notification message={error}/>;
   }
 
-  const deleteItemContact = id => {
-    return dispatch(deleteContactById(id));
-  };
-  
+  const [deleteItemContact] = useDeleteContactMutation();
+
   return (
     <>
-      {filteredContacts.length > 0 ? (
-        content
-      ) : (
-        <Notification message="You don't have this contact" />
-      )}
+     {content}
     </>
   );
 };

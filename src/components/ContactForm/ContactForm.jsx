@@ -1,26 +1,24 @@
 import styles from './ContactForm.module.css';
 import { Button } from 'components/Button/Button';
 import React from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { addNewContact } from 'redux/slices/contactsSlice';
+import {
+  useGetContactsQuery,
+  useAddContactMutation,
+} from 'services/contactsApi';
 
 const ContactForm = () => {
   const { form, form__field, label, input } = styles;
 
-  const contacts = useSelector(state => state.contacts.contacts);
-  const dispatch = useDispatch();
+  const { data: contacts = [] } = useGetContactsQuery();
+  const [addContact] = useAddContactMutation();
 
-  const onSubmit = evt => {
-    evt.preventDefault();
+  const onSubmit = async e => {
+    e.preventDefault();
 
-    const form = evt.target;
+    const form = e.target;
     const name = form.name.value;
     const number = form.number.value;
 
-    const newContact = {
-      name,
-      phone: number,
-    };
 
     if (contacts.some(contact => contact.name === name)) {
       alert(`${name} is already in contacts`);
@@ -28,14 +26,21 @@ const ContactForm = () => {
     }
 
     if (contacts.some(contact => contact.number === number)) {
-      const filteredNumber = contacts.filter(
+      const [filteredNumber] = contacts.filter(
         contact => contact.number === number
-      )[0].name;
-      alert(`${number} is already in contact with ${filteredNumber} `);
+      );
+      alert(`${number} is already in contact with ${filteredNumber.name} `);
       return;
     }
 
-    dispatch(addNewContact(newContact));
+    try {
+      await addContact({
+        name,
+        phone:number,
+      });
+    } catch (error) {
+      alert(`Failed to save the contact`);
+    }
     form.reset();
   };
 

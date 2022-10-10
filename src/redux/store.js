@@ -8,9 +8,8 @@ const store = configureStore({
     [contactsApi.reducerPath]: contactsApi.reducer,
   },
   middleware: getDefaultMiddleware =>
-    getDefaultMiddleware({
-      serializableCheck: false,
-    }),
+    getDefaultMiddleware().concat(contactsApi.middleware),
+  devTools: true,
 });
 
 export default store;
