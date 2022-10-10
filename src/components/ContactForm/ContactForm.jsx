@@ -10,7 +10,7 @@ const ContactForm = () => {
   const { form, form__field, label, input } = styles;
 
   const { data: contacts = [] } = useGetContactsQuery();
-  const [addContact] = useAddContactMutation();
+  const [addContact, { isLoading }] = useAddContactMutation();
 
   const onSubmit = async e => {
     e.preventDefault();
@@ -18,7 +18,6 @@ const ContactForm = () => {
     const form = e.target;
     const name = form.name.value;
     const number = form.number.value;
-
 
     if (contacts.some(contact => contact.name === name)) {
       alert(`${name} is already in contacts`);
@@ -36,7 +35,7 @@ const ContactForm = () => {
     try {
       await addContact({
         name,
-        phone:number,
+        phone: number,
       });
     } catch (error) {
       alert(`Failed to save the contact`);
@@ -74,8 +73,10 @@ const ContactForm = () => {
           required
         />
       </div>
-
-      <Button type="submit" title="Add contact"></Button>
+      <Button
+        type="submit"
+        title={isLoading ? 'Loading ...' : 'Add contact'}
+      ></Button>
     </form>
   );
 };
