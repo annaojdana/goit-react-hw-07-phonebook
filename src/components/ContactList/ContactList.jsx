@@ -27,32 +27,34 @@ const ContactList = () => {
     c.name.toLowerCase().includes(filter)
   );
 
-  let content = <Notification message="Your phonebook is empty" />;
+  let content;
 
   if (isLoading) {
     content = <Loader />;
   } else if (isSuccess) {
-    content = (
-      <ul className={wrapper}>
-        {filteredContacts.map(contact => {
-          return (
-            <li className={text} key={nanoid()}>
-              <span>
-                {`${contact.name}:
+    filteredContacts.length !== 0
+      ? (content = (
+          <ul className={wrapper}>
+            {filteredContacts.map(contact => {
+              return (
+                <li className={text} key={nanoid()}>
+                  <span>
+                    {`${contact.name}:
                ${contact.phone}`}
-              </span>
-              <button
-                type="button"
-                className={button}
-                onClick={() => deleteItemContact({ id: contact.id })}
-              >
-                Delete
-              </button>
-            </li>
-          );
-        })}
-      </ul>
-    );
+                  </span>
+                  <button
+                    type="button"
+                    className={button}
+                    onClick={() => deleteItemContact({ id: contact.id })}
+                  >
+                    Delete
+                  </button>
+                </li>
+              );
+            })}
+          </ul>
+        ))
+      : (content = <Notification message="Your phonebook is empty" />);
   } else if (isError) {
     content = <Notification message={error} />;
   }

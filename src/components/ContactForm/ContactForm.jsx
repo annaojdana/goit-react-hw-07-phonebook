@@ -75,7 +75,7 @@ const ContactForm = () => {
       </div>
       <Button
         type="submit"
-        title={isLoading ? 'Loading ...' : 'Add contact'}
+        title={isLoading ? 'Adding...' : 'Add contact'}
       ></Button>
     </form>
   );
