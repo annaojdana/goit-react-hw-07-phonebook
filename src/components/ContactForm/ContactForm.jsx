@@ -24,9 +24,9 @@ const ContactForm = () => {
       return;
     }
 
-    if (contacts.some(contact => contact.number === number)) {
+    if (contacts.some(contact => contact.phone === number)) {
       const [filteredNumber] = contacts.filter(
-        contact => contact.number === number
+        contact => contact.phone === number
       );
       alert(`${number} is already in contact with ${filteredNumber.name} `);
       return;

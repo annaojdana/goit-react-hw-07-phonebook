@@ -1,6 +1,6 @@
 import styles from './ContactList.module.css';
 import { Notification } from 'components/Notification/Notification';
-import React from 'react';
+import { useMemo } from 'react';
 import { useSelector } from 'react-redux';
 import { nanoid } from 'nanoid';
 import Loader from 'components/Loader/Loader';
@@ -23,9 +23,9 @@ const ContactList = () => {
   const filter = useSelector(state => state.filter);
   const [deleteItemContact] = useDeleteContactMutation();
 
-  const filteredContacts = contacts.filter(c =>
-    c.name.toLowerCase().includes(filter)
-  );
+  const filteredContacts = useMemo(() => {
+    return contacts.filter(c => c.name.toLowerCase().includes(filter));
+  }, [contacts, filter]);
 
   let content;
 
